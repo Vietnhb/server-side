@@ -1,12 +1,11 @@
 package com.example.backend.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 @AllArgsConstructor
-public class UserResponse {
-    private Long Id;
+public class UpdateUserRequest {
     private String email;
     private String fullName;
     private String role;

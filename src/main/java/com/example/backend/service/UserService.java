@@ -22,15 +22,4 @@ public class UserService {
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Khong Thay User"));
         return new UserResponse(user.getId(), user.getEmail(), user.getFullName(), user.getRole().getName());
     }
-
-    public List<UserResponse> getAllUser() {
-        return userRepository.findAll()
-                .stream()
-                .map(user -> new UserResponse(
-                        user.getId(),
-                        user.getEmail(),
-                        user.getFullName(),
-                        user.getRole().getName()))
-                .toList();
-    }
 }
