@@ -10,4 +10,18 @@ public class UserResponse {
     private String email;
     private String fullName;
     private String role;
+    private Integer points; // Điểm thưởng (cho Citizen)
+
+    public UserResponse(Long id, String email, String fullName) {
+        this.Id = id;
+        this.email = email;
+        this.fullName = fullName;
+    }
+
+    public UserResponse(Long id, String email, String fullName, String role) {
+        this.Id = id;
+        this.email = email;
+        this.fullName = fullName;
+        this.role = role;
+    }
 }

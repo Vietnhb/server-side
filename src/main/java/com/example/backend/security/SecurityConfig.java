@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -27,11 +29,34 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-
+                        // Public endpoints
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/user/me").authenticated()
+                        .requestMatchers("/api/category/**").permitAll()
+
+                        // Admin endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+                        // Enterprise endpoints
+                        .requestMatchers("/api/enterprise/**").hasRole("ENTERPRISE")
+
+                        // Collector endpoints
+                        .requestMatchers("/api/collector/**").hasRole("COLLECTOR")
+
+                        // Points endpoints (Enterprise creates rules, Citizen views transactions)
+                        .requestMatchers("/api/points/rules/**").hasRole("ENTERPRISE")
+                        .requestMatchers("/api/points/transactions").authenticated()
+
+                        // Complaint endpoints
+                        .requestMatchers("/api/complaint/create").hasRole("CITIZEN")
+                        .requestMatchers("/api/complaint/my-complaints").hasRole("CITIZEN")
+                        .requestMatchers("/api/complaint/all").hasRole("ADMIN")
+                        .requestMatchers("/api/complaint/*/resolve").hasRole("ADMIN")
+
+                        // User & Report endpoints (authenticated users)
+                        .requestMatchers("/api/user/**").authenticated()
+                        .requestMatchers("/api/report/**").authenticated()
+
                         .anyRequest().authenticated())
 
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -49,5 +74,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

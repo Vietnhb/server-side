@@ -24,4 +24,8 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    // Điểm thưởng tích lũy (cho Citizen)
+    @Column(name = "points")
+    private Integer points;
 }

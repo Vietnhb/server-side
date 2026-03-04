@@ -43,7 +43,7 @@ public class AuthService {
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new ApiException(HttpStatus.BAD_REQUEST, "Email đã tồn tại");
         }
-        Role role = roleRepository.findByName("GUEST")
+        Role role = roleRepository.findByName("CITIZEN")
                 .orElseThrow(() -> new ApiException(HttpStatus.INTERNAL_SERVER_ERROR, "Lỗi server"));
         User user = new User();
         user.setEmail(request.getEmail());
