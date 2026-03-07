@@ -3,9 +3,9 @@ package com.example.backend.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.dto.LoginRequest;
-import com.example.backend.dto.LoginResponse;
-import com.example.backend.dto.SignupRequest;
+import com.example.backend.dto.request.SignupRequest;
+import com.example.backend.dto.respone.LoginRequest;
+import com.example.backend.dto.respone.LoginResponse;
 import com.example.backend.service.AuthService;
 
 import lombok.AllArgsConstructor;

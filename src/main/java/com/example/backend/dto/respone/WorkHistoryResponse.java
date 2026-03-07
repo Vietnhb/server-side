@@ -1,4 +1,4 @@
-package com.example.backend.dto;
+package com.example.backend.dto.respone;
 
 import java.time.LocalDateTime;
 
@@ -9,12 +9,15 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PointHistoryResponse {
-    private Long id;
-    private Integer points;
+public class WorkHistoryResponse {
     private Long reportId;
-    private LocalDateTime createdAt;
     private String categoryName;
+    private String provinceCode;
+    private String wardCode;
+    private String addressDetail;
     private Double weight;
     private Boolean isCorrectlyClassified;
+    private LocalDateTime collectedAt;
+    private String citizenName;
+    private String collectedImageUrl;
 }

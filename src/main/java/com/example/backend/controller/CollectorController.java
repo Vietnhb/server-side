@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.dto.CollectorResponse;
-import com.example.backend.dto.UpdateCollectionStatusRequest;
-import com.example.backend.dto.WasteReportResponse;
-import com.example.backend.dto.WorkHistoryResponse;
-import com.example.backend.dto.WorkStatisticsResponse;
+import com.example.backend.dto.request.UpdateCollectionStatusRequest;
+import com.example.backend.dto.respone.CollectorResponse;
+import com.example.backend.dto.respone.WasteReportResponse;
+import com.example.backend.dto.respone.WorkHistoryResponse;
+import com.example.backend.dto.respone.WorkStatisticsResponse;
 import com.example.backend.service.CollectorService;
 
 import lombok.AllArgsConstructor;

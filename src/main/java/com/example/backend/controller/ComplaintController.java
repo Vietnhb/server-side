@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.dto.ComplaintResponse;
-import com.example.backend.dto.CreateComplaintRequest;
-import com.example.backend.dto.ResolveComplaintRequest;
+import com.example.backend.dto.request.CreateComplaintRequest;
+import com.example.backend.dto.request.ResolveComplaintRequest;
+import com.example.backend.dto.respone.ComplaintResponse;
 import com.example.backend.service.ComplaintService;
 
 import lombok.AllArgsConstructor;

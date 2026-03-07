@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.dto.AddUserAddressRequest;
-import com.example.backend.dto.UpdateUserRequest;
-import com.example.backend.dto.UserAddressResponse;
-import com.example.backend.dto.UserResponse;
-import com.example.backend.dto.PointHistoryResponse;
-import com.example.backend.dto.RankingUserResponse;
+import com.example.backend.dto.request.AddUserAddressRequest;
+import com.example.backend.dto.request.UpdateUserRequest;
+import com.example.backend.dto.respone.PointHistoryResponse;
+import com.example.backend.dto.respone.RankingUserResponse;
+import com.example.backend.dto.respone.UserAddressResponse;
+import com.example.backend.dto.respone.UserResponse;
 import com.example.backend.service.UserService;
 
 import lombok.AllArgsConstructor;

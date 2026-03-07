@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.dto.CreateWasteReportRequest;
-import com.example.backend.dto.WasteReportResponse;
+import com.example.backend.dto.request.CreateWasteReportRequest;
+import com.example.backend.dto.respone.WasteReportResponse;
 import com.example.backend.entity.User;
 import com.example.backend.entity.UserAddress;
 import com.example.backend.entity.WasteCategory;
@@ -34,12 +34,11 @@ public class WasteReportService {
                 User user = userRepository.findByEmail(email)
                                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
 
-                // Kiểm tra địa chỉ có thuộc user này không và phải đang active
+                // Kiểm tra địa chỉ có thuộc user này không và có active
                 UserAddress address = userAddressRepository
                                 .findByIdAndUserIdAndIsActiveTrue(request.getUserAddressId(), user.getId())
-                                .orElseThrow(
-                                                () -> new ApiException(HttpStatus.NOT_FOUND,
-                                                                "Address not found, does not belong to user, or has been deleted"));
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,
+                                                "Address not found, does not belong to user, or has been deleted"));
 
                 // Kiểm tra category có tồn tại và active không
                 WasteCategory category = wasteCategoryRepository.findById(request.getCategoryId())
@@ -53,6 +52,10 @@ public class WasteReportService {
                 WasteReport report = new WasteReport();
                 report.setImageUrl(request.getImageUrl());
                 report.setDescription(request.getDescription());
+                // Lưu khối lượng ước tính từ citizen (nếu có)
+                if (request.getEstimatedWeight() != null && request.getEstimatedWeight() > 0) {
+                        report.setWeight(request.getEstimatedWeight());
+                }
                 // Copy tọa độ và thông tin quan trọng từ address (snapshot)
                 report.setLatitude(address.getLatitude());
                 report.setLongitude(address.getLongitude());
@@ -112,6 +115,7 @@ public class WasteReportService {
                 // Address info
                 response.setAddressId(report.getUserAddress().getId());
                 response.setAddressDetail(report.getUserAddress().getDetailAddress());
+                response.setAddressNumber(report.getUserAddress().getAddressNumber());
                 response.setLatitude(report.getLatitude());
                 response.setLongitude(report.getLongitude());
                 response.setProvinceCode(report.getProvinceCode());
@@ -122,6 +126,9 @@ public class WasteReportService {
                 // Category info
                 response.setCategoryId(report.getCategory().getId());
                 response.setCategoryName(report.getCategory().getName());
+
+                // Weight
+                response.setWeight(report.getWeight());
 
                 return response;
         }

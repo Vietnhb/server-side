@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.dto.AddUserAddressRequest;
-import com.example.backend.dto.UpdateUserRequest;
-import com.example.backend.dto.UserAddressResponse;
-import com.example.backend.dto.UserResponse;
-import com.example.backend.dto.PointHistoryResponse;
-import com.example.backend.dto.RankingUserResponse;
+import com.example.backend.dto.request.AddUserAddressRequest;
+import com.example.backend.dto.request.UpdateUserRequest;
+import com.example.backend.dto.respone.PointHistoryResponse;
+import com.example.backend.dto.respone.RankingUserResponse;
+import com.example.backend.dto.respone.UserAddressResponse;
+import com.example.backend.dto.respone.UserResponse;
 import com.example.backend.entity.User;
 import com.example.backend.entity.UserAddress;
 import com.example.backend.entity.PointTransaction;
@@ -222,12 +222,12 @@ public class UserService {
                 .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
 
         System.out.println("🔍 Getting point history for user ID: " + user.getId() + ", email: " + email);
-        
+
         List<PointTransaction> transactions = pointTransactionRepository
                 .findByUserIdOrderByCreatedAtDesc(user.getId());
 
         System.out.println("📊 Found " + transactions.size() + " transactions");
-        
+
         return transactions.stream()
                 .map(this::mapToPointHistoryResponse)
                 .collect(Collectors.toList());

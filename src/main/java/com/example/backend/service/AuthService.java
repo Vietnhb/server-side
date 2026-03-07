@@ -3,9 +3,9 @@ package com.example.backend.service;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.dto.LoginResponse;
-import com.example.backend.dto.SignupRequest;
-import com.example.backend.dto.UserResponse;
+import com.example.backend.dto.request.SignupRequest;
+import com.example.backend.dto.respone.LoginResponse;
+import com.example.backend.dto.respone.UserResponse;
 import com.example.backend.entity.Role;
 import com.example.backend.entity.User;
 import com.example.backend.exception.ApiException;

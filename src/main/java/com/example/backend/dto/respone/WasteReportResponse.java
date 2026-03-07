@@ -1,4 +1,4 @@
-package com.example.backend.dto;
+package com.example.backend.dto.respone;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +25,7 @@ public class WasteReportResponse {
     // Thông tin địa chỉ
     private Long addressId;
     private String addressDetail;
+    private String addressNumber;
     private Double latitude;
     private Double longitude;
     private String provinceCode;
@@ -35,4 +36,7 @@ public class WasteReportResponse {
     // Thông tin loại rác
     private Long categoryId;
     private String categoryName;
+
+    // Khối lượng rác (kg)
+    private Double weight;
 }

@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.example.backend.dto.ComplaintResponse;
-import com.example.backend.dto.CreateComplaintRequest;
-import com.example.backend.dto.ResolveComplaintRequest;
+import com.example.backend.dto.request.CreateComplaintRequest;
+import com.example.backend.dto.request.ResolveComplaintRequest;
+import com.example.backend.dto.respone.ComplaintResponse;
 import com.example.backend.entity.Complaint;
 import com.example.backend.entity.User;
 import com.example.backend.entity.WasteReport;

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.dto.CreateWasteReportRequest;
-import com.example.backend.dto.WasteReportResponse;
+import com.example.backend.dto.request.CreateWasteReportRequest;
+import com.example.backend.dto.respone.WasteReportResponse;
 import com.example.backend.service.WasteReportService;
 
 import lombok.AllArgsConstructor;

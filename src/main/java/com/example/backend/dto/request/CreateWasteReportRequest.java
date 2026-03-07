@@ -1,4 +1,4 @@
-package com.example.backend.dto;
+package com.example.backend.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,4 +12,5 @@ public class CreateWasteReportRequest {
     private String description;
     private Long userAddressId;
     private Long categoryId;
+    private Double estimatedWeight; // Khối lượng ước tính (kg)
 }

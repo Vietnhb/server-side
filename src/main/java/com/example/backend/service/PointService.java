@@ -9,9 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.backend.dto.CreatePointRuleRequest;
-import com.example.backend.dto.PointRuleResponse;
-import com.example.backend.dto.PointTransactionResponse;
+import com.example.backend.dto.request.CreatePointRuleRequest;
+import com.example.backend.dto.respone.PointRuleResponse;
+import com.example.backend.dto.respone.PointTransactionResponse;
 import com.example.backend.entity.PointRule;
 import com.example.backend.entity.PointTransaction;
 import com.example.backend.entity.RecyclingEnterprise;
@@ -212,7 +212,8 @@ public class PointService {
         RecyclingEnterprise enterprise = report.getEnterprise();
 
         // Tìm LUẬT do Enterprise thiết lập
-        // Tìm rule có chứa category cụ thể hoặc áp dụng cho tất cả categories (empty set)
+        // Tìm rule có chứa category cụ thể hoặc áp dụng cho tất cả categories (empty
+        // set)
         PointRule rule = pointRuleRepository
                 .findApplicableRule(enterprise.getId(), report.getCategory())
                 .orElse(null);
@@ -239,11 +240,12 @@ public class PointService {
                     .append(rule.getPointsPerKg()).append(")");
         }
 
-        // 3. Điểm thưởng phân loại đúng (nếu category của report nằm trong categories của rule)
+        // 3. Điểm thưởng phân loại đúng (nếu category của report nằm trong categories
+        // của rule)
         if (rule.getCorrectClassificationBonus() != null && !rule.getCategories().isEmpty()) {
             boolean categoryMatches = rule.getCategories().stream()
-                .anyMatch(cat -> cat.getId().equals(report.getCategory().getId()));
-            
+                    .anyMatch(cat -> cat.getId().equals(report.getCategory().getId()));
+
             if (categoryMatches) {
                 totalPoints += rule.getCorrectClassificationBonus();
                 description.append(" + Correct Classification: ").append(rule.getCorrectClassificationBonus());

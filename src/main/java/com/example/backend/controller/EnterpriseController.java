@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend.dto.AssignCollectorRequest;
-import com.example.backend.dto.CollectorResponse;
-import com.example.backend.dto.CreateCollectorRequest;
-import com.example.backend.dto.EnterpriseResponse;
-import com.example.backend.dto.RegisterEnterpriseRequest;
-import com.example.backend.dto.WasteReportResponse;
-import com.example.backend.dto.WasteStatisticsResponse;
+import com.example.backend.dto.request.AssignCollectorRequest;
+import com.example.backend.dto.request.CreateCollectorRequest;
+import com.example.backend.dto.request.RegisterEnterpriseRequest;
+import com.example.backend.dto.respone.CollectorResponse;
+import com.example.backend.dto.respone.EnterpriseResponse;
+import com.example.backend.dto.respone.WasteReportResponse;
+import com.example.backend.dto.respone.WasteStatisticsResponse;
 import com.example.backend.service.EnterpriseService;
 
 import lombok.AllArgsConstructor;
