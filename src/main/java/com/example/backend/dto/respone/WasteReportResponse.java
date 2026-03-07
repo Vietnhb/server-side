@@ -39,4 +39,10 @@ public class WasteReportResponse {
 
     // Khối lượng rác (kg)
     private Double weight;
+
+    // Phân loại đúng/sai (Collector kiểm tra)
+    private Boolean isCorrectlyClassified;
+
+    // Ảnh xác nhận thu gom (Collector chụp khi hoàn thành)
+    private String collectedImageUrl;
 }

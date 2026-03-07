@@ -16,6 +16,7 @@ public class WasteReport {
         PENDING,
         ACCEPTED,
         ASSIGNED,
+        ON_THE_WAY,
         COLLECTED
     }
 

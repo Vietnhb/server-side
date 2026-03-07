@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.backend.dto.request.UpdateCollectionStatusRequest;
 import com.example.backend.dto.respone.CollectorResponse;
@@ -75,6 +76,7 @@ public class CollectorService {
         }
 
         // Cập nhật trạng thái thu gom
+        @Transactional
         public WasteReportResponse updateCollectionStatus(String email, Long reportId,
                         UpdateCollectionStatusRequest request) {
                 User user = userRepository.findByEmail(email)
@@ -147,7 +149,17 @@ public class CollectorService {
                 }
 
                 WasteReport updated = wasteReportRepository.save(report);
-                return mapReportToResponse(updated);
+
+                // Force load lazy relationships within transaction
+                if (updated.getCitizen() != null)
+                        updated.getCitizen().getFullName();
+                if (updated.getUserAddress() != null)
+                        updated.getUserAddress().getDetailAddress();
+                if (updated.getCategory() != null)
+                        updated.getCategory().getName();
+
+                WasteReportResponse response = mapReportToResponse(updated);
+                return response;
         }
 
         // Cập nhật status collector (AVAILABLE/BUSY/ON_THE_WAY/OFFLINE)
@@ -236,10 +248,14 @@ public class CollectorService {
                 response.setCitizenEmail(report.getCitizen().getEmail());
                 response.setAddressId(report.getUserAddress().getId());
                 response.setAddressDetail(report.getUserAddress().getDetailAddress());
+                response.setAddressNumber(report.getUserAddress().getAddressNumber());
                 response.setLatitude(report.getLatitude());
                 response.setLongitude(report.getLongitude());
                 response.setCategoryId(report.getCategory().getId());
                 response.setCategoryName(report.getCategory().getName());
+                response.setWeight(report.getWeight());
+                response.setIsCorrectlyClassified(report.getIsCorrectlyClassified());
+                response.setCollectedImageUrl(report.getCollectedImageUrl());
                 return response;
         }
 

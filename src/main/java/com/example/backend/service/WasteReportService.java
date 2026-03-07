@@ -130,6 +130,12 @@ public class WasteReportService {
                 // Weight
                 response.setWeight(report.getWeight());
 
+                // Classification
+                response.setIsCorrectlyClassified(report.getIsCorrectlyClassified());
+
+                // Collected image
+                response.setCollectedImageUrl(report.getCollectedImageUrl());
+
                 return response;
         }
 }

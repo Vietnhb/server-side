@@ -353,10 +353,14 @@ public class EnterpriseService {
                 response.setCitizenEmail(report.getCitizen().getEmail());
                 response.setAddressId(report.getUserAddress().getId());
                 response.setAddressDetail(report.getUserAddress().getDetailAddress());
+                response.setAddressNumber(report.getUserAddress().getAddressNumber());
                 response.setLatitude(report.getLatitude());
                 response.setLongitude(report.getLongitude());
                 response.setCategoryId(report.getCategory().getId());
                 response.setCategoryName(report.getCategory().getName());
+                response.setWeight(report.getWeight());
+                response.setIsCorrectlyClassified(report.getIsCorrectlyClassified());
+                response.setCollectedImageUrl(report.getCollectedImageUrl());
                 return response;
         }
 

@@ -240,13 +240,17 @@ public class PointService {
                     .append(rule.getPointsPerKg()).append(")");
         }
 
-        // 3. Điểm thưởng phân loại đúng (nếu category của report nằm trong categories
-        // của rule)
-        if (rule.getCorrectClassificationBonus() != null && !rule.getCategories().isEmpty()) {
-            boolean categoryMatches = rule.getCategories().stream()
-                    .anyMatch(cat -> cat.getId().equals(report.getCategory().getId()));
+        // 3. Điểm thưởng phân loại đúng (nếu collector xác nhận citizen phân loại đúng)
+        if (rule.getCorrectClassificationBonus() != null
+                && report.getIsCorrectlyClassified() != null
+                && report.getIsCorrectlyClassified()) {
+            // Nếu rule áp dụng cho ALL categories (categories rỗng) hoặc category của
+            // report nằm trong rule
+            boolean shouldAward = rule.getCategories().isEmpty()
+                    || rule.getCategories().stream()
+                            .anyMatch(cat -> cat.getId().equals(report.getCategory().getId()));
 
-            if (categoryMatches) {
+            if (shouldAward) {
                 totalPoints += rule.getCorrectClassificationBonus();
                 description.append(" + Correct Classification: ").append(rule.getCorrectClassificationBonus());
             }
