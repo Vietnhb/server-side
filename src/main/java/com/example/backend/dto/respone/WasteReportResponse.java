@@ -45,4 +45,7 @@ public class WasteReportResponse {
 
     // Ảnh xác nhận thu gom (Collector chụp khi hoàn thành)
     private String collectedImageUrl;
+
+    // Điểm ưu tiên cho Enterprise gợi ý
+    private Integer priorityScore;
 }

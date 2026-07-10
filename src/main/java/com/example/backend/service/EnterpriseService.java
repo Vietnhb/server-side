@@ -115,10 +115,54 @@ public class EnterpriseService {
         }
 
         // Xem danh sách yêu cầu thu gom PENDING (chưa được accept)
-        public List<WasteReportResponse> getPendingReports() {
+        public List<WasteReportResponse> getPendingReports(String email) {
+                User user = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "User not found"));
+                RecyclingEnterprise enterprise = enterpriseRepository.findByUserId(user.getId())
+                                .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND, "Enterprise not found"));
+
                 List<WasteReport> reports = wasteReportRepository.findByStatus(ReportStatus.PENDING);
+                
+                String acceptedTypes = enterprise.getAcceptedWasteTypes() != null ? enterprise.getAcceptedWasteTypes().toUpperCase() : "";
+                String serviceArea = enterprise.getServiceArea() != null ? enterprise.getServiceArea().toUpperCase() : "";
+
+                java.util.Map<Long, Integer> scoreMap = new java.util.HashMap<>();
+                for (WasteReport report : reports) {
+                        int score = 0;
+                        if (report.getCategory() != null && acceptedTypes.contains(report.getCategory().getName().toUpperCase())) {
+                                score += 2;
+                        }
+                        boolean areaMatch = false;
+                        if (report.getProvinceCode() != null && serviceArea.contains(report.getProvinceCode().toUpperCase())) {
+                                areaMatch = true;
+                        }
+                        if (!areaMatch && report.getUserAddress() != null && report.getUserAddress().getProvinceCode() != null && serviceArea.contains(report.getUserAddress().getProvinceCode().toUpperCase())) {
+                                areaMatch = true;
+                        }
+                        if (areaMatch) {
+                                score += 1;
+                        }
+                        scoreMap.put(report.getId(), score);
+                }
+
+                reports.sort((a, b) -> {
+                        int scoreA = scoreMap.get(a.getId());
+                        int scoreB = scoreMap.get(b.getId());
+                        if (scoreA != scoreB) {
+                                return Integer.compare(scoreB, scoreA); // Descending
+                        }
+                        if (b.getCreatedAt() != null && a.getCreatedAt() != null) {
+                                return b.getCreatedAt().compareTo(a.getCreatedAt());
+                        }
+                        return 0;
+                });
+
                 return reports.stream()
-                                .map(this::mapReportToResponse)
+                                .map(report -> {
+                                        WasteReportResponse resp = mapReportToResponse(report);
+                                        resp.setPriorityScore(scoreMap.get(report.getId()));
+                                        return resp;
+                                })
                                 .collect(Collectors.toList());
         }
 

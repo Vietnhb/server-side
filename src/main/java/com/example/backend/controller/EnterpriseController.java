@@ -66,8 +66,9 @@ public class EnterpriseController {
 
     // Xem danh sách yêu cầu PENDING (chưa được accept)
     @GetMapping("/reports/pending")
-    public ResponseEntity<List<WasteReportResponse>> getPendingReports() {
-        List<WasteReportResponse> reports = enterpriseService.getPendingReports();
+    public ResponseEntity<List<WasteReportResponse>> getPendingReports(Authentication authentication) {
+        String email = authentication.getName();
+        List<WasteReportResponse> reports = enterpriseService.getPendingReports(email);
         return ResponseEntity.ok(reports);
     }
 
